@@ -1,0 +1,21 @@
+﻿Xử lý,DB,Tên biến,Kiểu dữ liệu,Start value,Retain,Công dụng / ghi chú
+Thêm mới,daiphunnuoc,stop_thuong_dong,Bool,FALSE (STOP NO) / TRUE (STOP NC),FALSE,Cấu hình loại tiếp điểm STOP thật; đặt Start value đúng trước download.
+Thêm mới,daiphunnuoc,nut_stop_nhan,Bool,FALSE,FALSE,STOP sau chuẩn hóa; 1 khi đang nhấn.
+Thêm mới,daiphunnuoc,nut_auto_da_loc,Bool,FALSE,FALSE,START sau lọc cả nhấn và nhả 30 ms.
+Thêm mới,daiphunnuoc,nut_stop_da_loc,Bool,FALSE,FALSE,STOP sau lọc cả nhấn và nhả 30 ms.
+Thêm mới,daiphunnuoc,nut_reset_da_loc,Bool,FALSE,FALSE,RESET sau lọc cả nhấn và nhả 30 ms.
+Thêm mới,daiphunnuoc,tat_ca_lenh_da_nha,Bool,FALSE,FALSE,Cả ba nút thật và bốn lệnh HMI đã nhả.
+Thêm mới,daiphunnuoc,nha_lenh_on_dinh,Bool,FALSE,FALSE,Đầu ra TON cho_nha_lenh; tất cả lệnh nhả ổn định 30 ms.
+Thêm mới,daiphunnuoc,da_nha_lenh,Bool,FALSE,FALSE,Cho nhận xung START/STOP sau khởi động; giữ tới FirstScan.
+Thêm mới,daiphunnuoc,nho_auto_that,Bool,FALSE,FALSE,Bộ nhớ cạnh P riêng của START thật; không ghi bằng cuộn khác.
+Thêm mới,daiphunnuoc,nho_stop_that,Bool,FALSE,FALSE,Bộ nhớ cạnh P riêng của STOP thật; không ghi bằng cuộn khác.
+Thêm mới,daiphunnuoc,nho_stop_hmi,Bool,FALSE,FALSE,Bộ nhớ cạnh P riêng của STOP HMI; không ghi bằng cuộn khác.
+Thêm mới,daiphunnuoc,xung_auto_that,Bool,FALSE,FALSE,Xung START thật sau cổng da_nha_lenh.
+Thêm mới,daiphunnuoc,xung_auto_hmi,Bool,FALSE,FALSE,Xung AUTO HMI sau cổng da_nha_lenh; dùng XUNG AUTO cũ làm bộ nhớ cạnh.
+Thêm mới,daiphunnuoc,xung_stop_that,Bool,FALSE,FALSE,Xung STOP thật sau cổng da_nha_lenh.
+Thêm mới,daiphunnuoc,xung_stop_hmi,Bool,FALSE,FALSE,Xung STOP HMI sau cổng da_nha_lenh.
+Thêm mới,daiphunnuoc,lenh_auto,Bool,FALSE,FALSE,OR hai xung START; quyền AUTO chung do CHO PHÉP AUTO giữ.
+Thêm mới,daiphunnuoc,lenh_stop,Bool,FALSE,FALSE,OR hai xung STOP; mỗi xung đảo tam_dung một lần.
+Thêm mới,daiphunnuoc,lenh_tat_hmi,Bool,FALSE,FALSE,Lệnh TẮT mới do HMI ghi; Press SetBit / Release ResetBit; PLC chỉ đọc.
+Thêm mới,daiphunnuoc,tam_dung,Bool,FALSE,FALSE,Trạng thái tạm dừng chung do PLC ghi; HMI_TAM_DUNG chỉ đọc.
+Đổi tên biến cũ,daiphunnuoc,giay_con_lai_tinh,DInt,0,FALSE,Đổi từ giaydachay3; giữ kiểu DInt và sửa mọi tham chiếu; không tạo thêm hai biến song song.

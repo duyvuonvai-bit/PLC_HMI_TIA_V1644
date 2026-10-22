@@ -1,0 +1,114 @@
+{
+  "mo_ta": "Mô hình Python rời rạc; chưa Compile, PLCSIM hoặc chạy PLC Siemens.",
+  "dt_ms": 10,
+  "so_nhom_dat": 25,
+  "so_nhom_loi": 0,
+  "ket_qua": [
+    {
+      "ten": "Khởi động giữ START thật: không nhận cạnh muộn do TON lọc nút",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Khởi động giữ AUTO HMI: phải nhả rồi nhấn mới được chạy",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Khởi động giữ STOP/RESET/TẮT: chỉ mở nhận lệnh sau nhả đủ 30 ms",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "START thật chốt AUTO; nhả START không làm mất quyền chạy",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Điều khiển chéo: START thật, STOP HMI, tiếp tục bằng STOP thật",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "AUTO HMI, STOP thật, tiếp tục HMI; giữ nút không đảo pause nhiều lần",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Một nguồn giữ mức 1 không che cạnh nhấn từ nguồn còn lại",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Xung dội nút thật ngắn hơn 30 ms không tạo lệnh; lần nhấn ổn định chỉ một xung",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Đang giữ STOP: glitch nhả ngắn hơn 30 ms không tạo lần nhấn mới",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "RESET đang giữ chặn START; nhả RESET rồi nhấn START mới chạy lại",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Thiếu nước/quá tải/dừng khẩn: dừng và nhớ lỗi; RESET sau hết lỗi rồi START",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Giữ RESET khi nguyên nhân hết: xóa nhớ lỗi theo mức, vẫn không tự khởi động",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Lỗi RTC khi yêu cầu START chưa được cấp AUTO vẫn chốt cảnh báo",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "FirstScan xóa quyền AUTO/pause/bước kể cả khi gieo trạng thái cũ",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "STOP loại NC: nhả đọc 1, nhấn đọc 0, vẫn pause/tiếp tục đúng",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Hết ca khi pause: giữ AUTO/pause, xóa bước/ET; ca sau tiếp tục từ bước 1",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Chọn AUTO ngoài ca: giữ quyền, chờ đúng giờ rồi bắt đầu bước 1",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Lịch ngày đủ 86.400 mốc giây: sáng 06–08, tối 17–20:30",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "STOP và START được nhận cùng scan: STOP chặn việc cấp AUTO mới",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "TẮT/RESET cùng START hoặc STOP: quyền hủy thắng, trạng thái về 0",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Hai nguồn STOP cùng scan chỉ đảo pause một lần",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "START khi đang pause không tự tiếp tục; phải nhấn STOP lần nữa",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Năm bước và vòng lặp 50 giây: mẫu van đúng, bơm không mất lệnh khi chuyển",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "STOP sát 10 s giữ bước, bỏ pause chỉ chuyển sang một bước kế tiếp",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "30.000 scan ngẫu nhiên: ngõ ra, liên động và ưu tiên hủy luôn nhất quán",
+      "ket_qua": "Đạt"
+    }
+  ],
+  "gioi_han": [
+    "TON/TONR tích lũy theo dt giả định; không chứng minh thời gian thực hoặc sai số một vòng quét của CPU.",
+    "Không kiểm tra dây điện, loại tiếp điểm thực, sự kiện HMI hay chất lượng truyền thông.",
+    "Lọc cả cạnh nhấn/nhả 30 ms chỉ là giả định thiết kế cần đối chiếu tín hiệu thực và cấu hình bộ thực hành.",
+    "RESET theo mức giữ chính sách V1644: lỗi hết trong khi RESET còn giữ sẽ xóa nhớ lỗi, nhưng AUTO vẫn bị khóa."
+  ]
+}

@@ -1,0 +1,146 @@
+[
+  {
+    "page": 1,
+    "key": "00_huong_dan"
+  },
+  {
+    "page": 2,
+    "key": "01_chuan_hoa_stop"
+  },
+  {
+    "page": 3,
+    "key": "02_1_loc_auto"
+  },
+  {
+    "page": 4,
+    "key": "02_2_loc_stop"
+  },
+  {
+    "page": 5,
+    "key": "02_3_loc_reset"
+  },
+  {
+    "page": 6,
+    "key": "03_cho_nha_lenh"
+  },
+  {
+    "page": 7,
+    "key": "04_bat_canh"
+  },
+  {
+    "page": 8,
+    "key": "05_hop_lenh"
+  },
+  {
+    "page": 9,
+    "key": "06_rtc"
+  },
+  {
+    "page": 10,
+    "key": "07_lich_chay"
+  },
+  {
+    "page": 11,
+    "key": "08_bao_ve"
+  },
+  {
+    "page": 12,
+    "key": "09_xac_nhan_loi"
+  },
+  {
+    "page": 13,
+    "key": "10_nho_loi"
+  },
+  {
+    "page": 14,
+    "key": "11a_huy_auto"
+  },
+  {
+    "page": 15,
+    "key": "11b_giu_auto"
+  },
+  {
+    "page": 16,
+    "key": "12_tam_dung"
+  },
+  {
+    "page": 17,
+    "key": "13_chuan_bi_buoc"
+  },
+  {
+    "page": 18,
+    "key": "14_buoc_1"
+  },
+  {
+    "page": 19,
+    "key": "15_buoc_2"
+  },
+  {
+    "page": 20,
+    "key": "16_buoc_3"
+  },
+  {
+    "page": 21,
+    "key": "17_buoc_4"
+  },
+  {
+    "page": 22,
+    "key": "18_buoc_5"
+  },
+  {
+    "page": 23,
+    "key": "19_chot_buoc"
+  },
+  {
+    "page": 24,
+    "key": "20a_van"
+  },
+  {
+    "page": 25,
+    "key": "20b_bom"
+  },
+  {
+    "page": 26,
+    "key": "21_chon_thoi_gian"
+  },
+  {
+    "page": 27,
+    "key": "22a_tinh_giay"
+  },
+  {
+    "page": 28,
+    "key": "22b_ghi_khong"
+  },
+  {
+    "page": 29,
+    "key": "A1_bien_loc"
+  },
+  {
+    "page": 30,
+    "key": "A2_bien_lenh"
+  },
+  {
+    "page": 31,
+    "key": "A3_timer"
+  },
+  {
+    "page": 32,
+    "key": "A4_doi_bien"
+  },
+  {
+    "page": 33,
+    "key": "B1_hmi_lenh"
+  },
+  {
+    "page": 34,
+    "key": "B2_hmi_phan_hoi"
+  },
+  {
+    "page": 35,
+    "key": "C_dau_noi"
+  },
+  {
+    "page": 36,
+    "key": "D_chay_thu"
+  }
+]
