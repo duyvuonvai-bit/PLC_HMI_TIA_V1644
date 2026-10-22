@@ -1,0 +1,167 @@
+{
+  "source_commit": "dffa0dd8752a838d4b986bcf3dc6072befdaf487",
+  "kind": "Discrete scan model, not Siemens runtime",
+  "limitations": [
+    "Timer integrates an abstract dt per enabled scan; not a Siemens TONR execution/timing test.",
+    "HMI Events/Animations/connections and native compilation cannot be tested from screenshots.",
+    "No proof covers unseen OBs, HMI writes to internal states, force tables or actual hardware."
+  ],
+  "changes_checked": [
+    "KHỞI TẠO CHỜ alias replaced by configured FirstScan at visible read sites.",
+    "reset_request parallel branches removed after upstream reset cancels run.",
+    "Network7+8 merged without reordering.",
+    "Intentional display correction: step outside1..5 =>0seconds; valid paused step keeps remaining time."
+  ],
+  "passed": 17,
+  "failed": 0,
+  "tests": [
+    {
+      "test": "Hai ca và toàn bộ mốc giây trong ngày",
+      "status": "PASS",
+      "detail": {
+        "seconds_checked": 86400,
+        "windows": "[06:00,08:00),[17:00,20:30)"
+      }
+    },
+    {
+      "test": "Giải mã van và bơm, kể cả bước ngoài 1–5",
+      "status": "PASS",
+      "detail": {
+        "combinations": 88,
+        "patterns": {
+          "1": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "2": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "3": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "4": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "5": [
+            0,
+            1,
+            0,
+            1
+          ]
+        }
+      }
+    },
+    {
+      "test": "Chu trình năm bước, bơm không mất lệnh khi chuyển bước",
+      "status": "PASS",
+      "detail": {
+        "first_steps": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          1,
+          2
+        ],
+        "transition_times_ms_model": [
+          10000,
+          20000,
+          30000,
+          40000,
+          50000,
+          60000
+        ]
+      }
+    },
+    {
+      "test": "STOP giữ bước/ET/giây rồi tiếp tục",
+      "status": "PASS",
+      "detail": {
+        "pause_after_ms": 4200,
+        "pause_duration_ms": 20000,
+        "resume_elapsed_ms": 4210
+      }
+    },
+    {
+      "test": "STOP sát thời điểm timer hoàn thành",
+      "status": "PASS",
+      "detail": "Dừng ở9990ms không chuyển; tiếp tục chỉ chuyển1→2."
+    },
+    {
+      "test": "TẮT trong lúc STOP",
+      "status": "PASS",
+      "detail": "TẮT ưu tiên xóa; AUTO khiSTOPcòn1 chưa xuất tải."
+    },
+    {
+      "test": "Hiển thị bước0 khi bậtAUTO lúcSTOPđanggiữ",
+      "status": "PASS",
+      "detail": "Sửa hiển thị: bước0 khiSTOPgiữ→0giây; bỏSTOP→bước1/10giây."
+    },
+    {
+      "test": "Thiếu nước",
+      "status": "PASS",
+      "detail": "Dừng cùngscan; nhớlỗi không tựxóa; RESETkhi hếtlỗi; TẮT→AUTO mới chạy."
+    },
+    {
+      "test": "Quá tải",
+      "status": "PASS",
+      "detail": "Dừng cùngscan; nhớlỗi không tựxóa; RESETkhi hếtlỗi; TẮT→AUTO mới chạy."
+    },
+    {
+      "test": "Dừng khẩn",
+      "status": "PASS",
+      "detail": "Dừng cùngscan; nhớlỗi không tựxóa; RESETkhi hếtlỗi; TẮT→AUTO mới chạy."
+    },
+    {
+      "test": "Lỗi đọc RTC",
+      "status": "PASS",
+      "detail": "Dừng cùngscan; nhớlỗi không tựxóa; RESETkhi hếtlỗi; TẮT→AUTO mới chạy."
+    },
+    {
+      "test": "RESET giữa lúc đang chạy và giữ nút RESET",
+      "status": "PASS",
+      "detail": "RESET nhận khiAUTO1,STOP0; nhảRESET không tự khởi động."
+    },
+    {
+      "test": "Hết ca và vào ca tiếp theo",
+      "status": "PASS",
+      "detail": "08:00 và20:30 xóa; ca sau bắt đầu bước1 khiquyềnAUTO vẫn còn."
+    },
+    {
+      "test": "STOP kéo dài qua thời điểm hết ca",
+      "status": "PASS",
+      "detail": "Hếtca ưu tiên xóa dùSTOP đanggiữ."
+    },
+    {
+      "test": "Khóa khởi động khi AUTO đang bật",
+      "status": "PASS",
+      "detail": "AUTOgiữ1 từkhởiđộng khôngtựchạy; cầnTẮT→AUTO."
+    },
+    {
+      "test": "Ngõ ra khi bước bị ghi giá trị bất thường",
+      "status": "PASS",
+      "detail": "Giátrị ngoài1–5 không mởvan/bơm; cầnRESET đểkhôi phục."
+    },
+    {
+      "test": "So sánh V1644 và bản17 qua chuỗi tín hiệu thay đổi",
+      "status": "PASS",
+      "detail": {
+        "paired_scans": 30000,
+        "random_seed": 1644,
+        "compared": "steps,5ET,outputs,remaining,permit,latches,reset,RTC,safety"
+      }
+    }
+  ]
+}
