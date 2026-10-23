@@ -1,0 +1,47 @@
+﻿Tên biến,Kiểu dữ liệu,Start value,Retain,Công dụng / thay đổi
+GIỜ PLC,DTL,Mặc định DTL,FALSE,"Giữ; NW6 đọc giờ PLC, NW7 và HMI dùng."
+TRẠNG THÁI RTC,Int,0,FALSE,Giữ; mã RET_VAL của RD_LOC_T tại NW6.
+RTC OK,Bool,FALSE,FALSE,Giữ; lệnh đọc giờ hợp lệ với mã 0 hoặc 1.
+CA SÁNG,Bool,FALSE,FALSE,Giữ; NW7 xác định ca 06:00–08:00; HMI hiển thị.
+CA TỐI,Bool,FALSE,FALSE,Giữ; NW7 xác định ca 17:00–20:30; HMI hiển thị.
+TRONG GIỜ,Bool,FALSE,FALSE,Giữ; ca sáng OR ca tối; NW11 và HMI dùng.
+AN TOÀN,Bool,FALSE,FALSE,"Giữ; NW8 tổng hợp nước, quá tải, dừng khẩn giả lập."
+LỖI HIỆN TẠI,Bool,FALSE,FALSE,"Giữ; NW8 ghi, NW10 chốt vào NHỚ LỖI."
+NHỚ LỖI,Bool,FALSE,FALSE,Giữ; SR tại NW10; chỉ xóa khi RESET hợp lệ.
+XUNG AUTO,Bool,FALSE,FALSE,Giữ; bộ nhớ cạnh P riêng của AUTO HMI tại NW4.
+XÁC NHẬN LỖI,Bool,FALSE,FALSE,Giữ; NW9 tính điều kiện xóa nhớ lỗi.
+HỦY PHÉP CHẠY,Bool,FALSE,FALSE,"Giữ; NW11 tổng hợp RESET, TẮT, lỗi và FirstScan."
+CHO PHÉP AUTO,Bool,FALSE,FALSE,Giữ; trạng thái AUTO chung do PLC giữ; HMI chỉ đọc.
+TỰ ĐỘNG CHẠY,Bool,FALSE,FALSE,Giữ; AUTO được cấp và đang trong giờ vận hành.
+BƯỚC HIỆN TẠI,Int,0,FALSE,"Giữ; NW19 chốt bước; timer, van và HMI đọc."
+BƯỚC TIẾP THEO,Int,0,FALSE,Giữ; chuẩn bị/chuyển bước trước khi NW19 chốt.
+etbuoc1,Time,T#0ms,FALSE,"Giữ; bản sao ET của TONR buoc1, dùng ở NW21."
+etbuoc2,Time,T#0ms,FALSE,"Giữ; bản sao ET của TONR buoc2, dùng ở NW21."
+etbuoc3,Time,T#0ms,FALSE,"Giữ; bản sao ET của TONR buoc3, dùng ở NW21."
+etbuoc4,Time,T#0ms,FALSE,"Giữ; bản sao ET của TONR buoc4, dùng ở NW21."
+etbuoc5,Time,T#0ms,FALSE,"Giữ; bản sao ET của TONR buoc5, dùng ở NW21."
+etdangchay,Time,T#0ms,FALSE,Giữ; NW21 chọn ET của bước hiện tại.
+etms,DInt,0,FALSE,"Giữ; kết quả T_CONV, số mili giây đã chạy."
+giaydachay,DInt,0,FALSE,Giữ; kết quả chia etms cho 1000 tại NW22.
+giay_con_lai_tinh,DInt,0,FALSE,Đổi tên giaydachay3; kết quả SUB trước CONV.
+thoigianconlai,Int,0,FALSE,Giữ; giây còn lại gửi tới HMI_CONLAI.
+chon_auto_hmi,Bool,FALSE,FALSE,"Giữ; lệnh AUTO nhấn nhả từ HMI, không phải trạng thái AUTO."
+hmi_du_nuoc,Bool,FALSE,FALSE,Giữ; công tắc giả lập mức nước; 1 = đủ nước.
+hmi_qua_tai,Bool,FALSE,FALSE,Giữ; công tắc giả lập quá tải; 1 = có lỗi.
+hmi_dung_khan,Bool,FALSE,FALSE,Giữ; công tắc giả lập dừng khẩn; 1 = tác động.
+hmi_reset,Bool,FALSE,FALSE,Giữ; lệnh RESET nhấn nhả từ HMI; PLC chỉ đọc.
+hmi_stop,Bool,FALSE,FALSE,"Giữ; lệnh STOP nhấn nhả từ HMI, không phải trạng thái dừng."
+reset_chuong_trinh,Bool,FALSE,FALSE,Giữ; NW5 hợp RESET thật và HMI theo mức nhấn.
+stop_thuong_dong,Bool,Theo NO/NC,FALSE,"Mới; FALSE nếu STOP NO, TRUE nếu STOP NC; đặt Start value."
+nut_stop_nhan,Bool,FALSE,FALSE,Mới; NW1 chuẩn hóa STOP thật; 1 khi đang nhấn.
+nut_auto_da_loc,Bool,FALSE,FALSE,Mới; START thật sau lọc nhấn và nhả 30 ms.
+nut_stop_da_loc,Bool,FALSE,FALSE,Mới; STOP thật sau lọc nhấn và nhả 30 ms.
+nut_reset_da_loc,Bool,FALSE,FALSE,Mới; RESET thật sau lọc nhấn và nhả 30 ms.
+da_nha_lenh,Bool,FALSE,FALSE,Mới; cho nhận START/STOP sau khi nhả lệnh lúc vào RUN.
+nho_auto_that,Bool,FALSE,FALSE,Mới; bộ nhớ cạnh P riêng của START thật.
+nho_stop_that,Bool,FALSE,FALSE,Mới; bộ nhớ cạnh P riêng của STOP thật.
+nho_stop_hmi,Bool,FALSE,FALSE,Mới; bộ nhớ cạnh P riêng của STOP HMI.
+lenh_auto,Bool,FALSE,FALSE,"Mới; NW4 hợp hai cạnh START, sau cổng da_nha_lenh."
+lenh_stop,Bool,FALSE,FALSE,"Mới; NW4 hợp hai cạnh STOP, sau cổng da_nha_lenh."
+lenh_tat_hmi,Bool,FALSE,FALSE,Mới; lệnh TẮT nhấn nhả từ HMI; PLC chỉ đọc.
+tam_dung,Bool,FALSE,FALSE,Mới; trạng thái tạm dừng chung do PLC giữ ở NW12.

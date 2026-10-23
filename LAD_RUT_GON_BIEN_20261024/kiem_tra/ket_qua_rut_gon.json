@@ -1,0 +1,155 @@
+{
+  "mo_ta": "Mô hình Python rời rạc và đối chiếu từng vòng quét; chưa Compile hoặc chạy trên Siemens.",
+  "dt_ms": 10,
+  "nhom_tinh_huong_dat": 25,
+  "nhom_tinh_huong_loi": 0,
+  "nhom_doi_chieu_dat": 7,
+  "nhom_doi_chieu_loi": 0,
+  "tong_so_vong_doi_chieu": 100138,
+  "tinh_huong": [
+    {
+      "ten": "Khởi động giữ START thật: không nhận cạnh muộn do TON lọc nút",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Khởi động giữ AUTO HMI: phải nhả rồi nhấn mới được chạy",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Khởi động giữ STOP/RESET/TẮT: chỉ mở nhận lệnh sau nhả đủ 30 ms",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "START thật chốt AUTO; nhả START không làm mất quyền chạy",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Điều khiển chéo: START thật, STOP HMI, tiếp tục bằng STOP thật",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "AUTO HMI, STOP thật, tiếp tục HMI; giữ nút không đảo pause nhiều lần",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Một nguồn giữ mức 1 không che cạnh nhấn từ nguồn còn lại",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Xung dội nút thật ngắn hơn 30 ms không tạo lệnh; lần nhấn ổn định chỉ một xung",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Đang giữ STOP: glitch nhả ngắn hơn 30 ms không tạo lần nhấn mới",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "RESET đang giữ chặn START; nhả RESET rồi nhấn START mới chạy lại",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Thiếu nước/quá tải/dừng khẩn: dừng và nhớ lỗi; RESET sau hết lỗi rồi START",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Giữ RESET khi nguyên nhân hết: xóa nhớ lỗi theo mức, vẫn không tự khởi động",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Lỗi RTC khi yêu cầu START chưa được cấp AUTO vẫn chốt cảnh báo",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "FirstScan xóa quyền AUTO/pause/bước kể cả khi gieo trạng thái cũ",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "STOP loại NC: nhả đọc 1, nhấn đọc 0, vẫn pause/tiếp tục đúng",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Hết ca khi pause: giữ AUTO/pause, xóa bước/ET; ca sau tiếp tục từ bước 1",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Chọn AUTO ngoài ca: giữ quyền, chờ đúng giờ rồi bắt đầu bước 1",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Lịch ngày đủ 86.400 mốc giây: sáng 06–08, tối 17–20:30",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "STOP và START được nhận cùng scan: STOP chặn việc cấp AUTO mới",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "TẮT/RESET cùng START hoặc STOP: quyền hủy thắng, trạng thái về 0",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Hai nguồn STOP cùng scan chỉ đảo pause một lần",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "START khi đang pause không tự tiếp tục; phải nhấn STOP lần nữa",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "Năm bước và vòng lặp 50 giây: mẫu van đúng, bơm không mất lệnh khi chuyển",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "STOP sát 10 s giữ bước, bỏ pause chỉ chuyển sang một bước kế tiếp",
+      "ket_qua": "Đạt"
+    },
+    {
+      "ten": "30.000 scan ngẫu nhiên: ngõ ra, liên động và ưu tiên hủy luôn nhất quán",
+      "ket_qua": "Đạt"
+    }
+  ],
+  "doi_chieu": [
+    {
+      "ten": "Hai chu trình đầy đủ, bốn mẫu thao tác chéo và giữ một nguồn",
+      "ket_qua": "Đạt",
+      "so_vong_doi_chieu": 13701
+    },
+    {
+      "ten": "Các lệnh giữ lúc khởi động và FirstScan có trạng thái cũ",
+      "ket_qua": "Đạt",
+      "so_vong_doi_chieu": 2905
+    },
+    {
+      "ten": "Lọc dội, nhả chớp khi giữ nút, tiếp điểm STOP NO và NC",
+      "ket_qua": "Đạt",
+      "so_vong_doi_chieu": 1042
+    },
+    {
+      "ten": "Giữ RESET, START/STOP/TẮT đồng thời và xóa lỗi theo mức",
+      "ket_qua": "Đạt",
+      "so_vong_doi_chieu": 604
+    },
+    {
+      "ten": "Các biên giờ chạy, chọn AUTO ngoài ca và hết ca khi tạm dừng",
+      "ket_qua": "Đạt",
+      "so_vong_doi_chieu": 827
+    },
+    {
+      "ten": "STOP ngay trước/vừa đạt 10 s, và bước bất hợp lệ được hiển thị 0",
+      "ket_qua": "Đạt",
+      "so_vong_doi_chieu": 1047
+    },
+    {
+      "ten": "80.000 vòng quét ngẫu nhiên có hạt giống cố định, cả STOP NO và NC",
+      "ket_qua": "Đạt",
+      "so_vong_doi_chieu": 80012
+    }
+  ],
+  "gioi_han": [
+    "Không thay cho Compile TIA, PLCSIM hoặc thử CPU thực.",
+    "TON/TONR dùng dt giả định 10 ms, không chứng minh thời gian thực và chi tiết cập nhật timer Siemens.",
+    "Chỉ tương đương với thứ tự network và nơi ghi biến như thiết kế; không xét force hoặc OB khác ghi đè giữa chừng.",
+    "P là tiếp điểm bắt cạnh toán hạng, bộ nhớ riêng, mỗi nhánh được đánh giá mỗi scan; không dùng một P sau OR.",
+    "Bốn phần tử s.xung là trace của bộ kiểm tra, không phải bốn biến trong bảng DB rút gọn."
+  ]
+}

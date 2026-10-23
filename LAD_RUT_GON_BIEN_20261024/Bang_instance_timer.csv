@@ -1,0 +1,13 @@
+﻿Tên instance,Lệnh,PT,Công dụng
+loc_auto_nhan,TON,T#30ms,Lọc nhấn START thật.
+loc_auto_nha,TON,T#30ms,Lọc nhả START thật.
+loc_stop_nhan,TON,T#30ms,Lọc nhấn STOP thật.
+loc_stop_nha,TON,T#30ms,Lọc nhả STOP thật.
+loc_reset_nhan,TON,T#30ms,Lọc nhấn RESET thật.
+loc_reset_nha,TON,T#30ms,Lọc nhả RESET thật.
+cho_nha_lenh,TON,T#30ms,Chờ nhả mọi lệnh khi CPU vào RUN.
+buoc1,TONR,T#10s,Giữ instance DB2.
+buoc2,TONR,T#10s,Giữ instance DB3.
+buoc3,TONR,T#10s,Giữ instance DB4.
+buoc4,TONR,T#10s,Giữ instance DB5.
+buoc5,TONR,T#10s,Giữ instance DB6.

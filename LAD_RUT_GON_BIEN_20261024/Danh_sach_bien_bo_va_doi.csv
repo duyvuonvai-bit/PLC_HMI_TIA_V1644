@@ -1,0 +1,14 @@
+﻿Tên biến / nhóm,Phân loại,Cách xử lý
+CÓ VAN MỞ,DB cũ,Không dùng trong bản mới; xóa khi toàn project hết tham chiếu.
+KHỞI TẠO CHỜ,DB cũ,Bản mới đọc trực tiếp FirstScan; bỏ các nhánh cũ rồi xóa biến.
+ĐÃ GẠT TẮT,DB cũ,Bỏ khi thay xong cơ chế AUTO cũ bằng START nhấn nhả.
+tat_ca_lenh_da_nha,Biến đệm bản trước,NW3 nối trực tiếp các tiếp điểm vào IN của TON cho_nha_lenh.
+nha_lenh_on_dinh,Biến đệm bản trước,"NW3 dùng trực tiếp ""cho_nha_lenh"".Q tại chân S."
+xung_auto_that,Biến đệm bản trước,NW4 hợp trực tiếp tiếp điểm P; giữ nho_auto_that.
+xung_auto_hmi,Biến đệm bản trước,NW4 hợp trực tiếp tiếp điểm P; giữ XUNG AUTO.
+xung_stop_that,Biến đệm bản trước,NW4 hợp trực tiếp tiếp điểm P; giữ nho_stop_that.
+xung_stop_hmi,Biến đệm bản trước,NW4 hợp trực tiếp tiếp điểm P; giữ nho_stop_hmi.
+HMI_DUNUOC,HMI: xóa có điều kiện,Đổi các đối tượng giả lập sang HMI_DU_NUOC; kiểm tra tham chiếu rồi xóa.
+HMI_STOP_NHAN,HMI: xóa có điều kiện,"Kiểm tra Events, Animations, Scripts; chỉ xóa nếu không dùng."
+ĐỦ NƯỚC / DỪNG KHẨN CẤP / QUÁ TẢI,PLC: đầu vào dự phòng,I0.1/I0.3/I0.4 chưa dùng ở bản giả lập; giữ nếu dự kiến đấu thật.
+System_Byte / DiagStatusUpdate / AlwaysTRUE / AlwaysFALSE,PLC: tên hệ thống,Có thể bỏ alias nếu không dùng; vẫn giữ cấu hình MB1 và FirstScan.

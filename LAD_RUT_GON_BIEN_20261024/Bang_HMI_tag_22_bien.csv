@@ -1,0 +1,23 @@
+﻿Tên tag HMI,Kiểu dữ liệu,Nguồn PLC,Công dụng / sự kiện
+chon_auto_hmi,Bool,daiphunnuoc.chon_auto_hmi,AUTO: Press SetBit; Release ResetBit.
+HMI_AUTO,Bool,"daiphunnuoc.""CHO PHÉP AUTO""",Đổi nguồn hiển thị sang AUTO chung; chỉ đọc.
+HMI_BOM,Bool,"""BƠM P1""",Giữ hiển thị ngõ ra Q0.0.
+HMI_BUOC,Int,"daiphunnuoc.""BƯỚC HIỆN TẠI""",Giữ hiển thị bước hiện tại.
+HMI_CA_SANG,Bool,"daiphunnuoc.""CA SÁNG""",Giữ hiển thị ca sáng.
+HMI_CA_TOI,Bool,"daiphunnuoc.""CA TỐI""",Giữ hiển thị ca tối.
+HMI_CONLAI,Int,daiphunnuoc.thoigianconlai,Giữ hiển thị số giây còn lại.
+HMI_DU_NUOC,Bool,daiphunnuoc.hmi_du_nuoc,Công tắc duy trì; 1 = đủ nước; dùng chung toàn HMI.
+HMI_DUNG_KHAN,Bool,daiphunnuoc.hmi_dung_khan,Công tắc giả lập duy trì; 1 = tác động.
+HMI_GIO_PLC,DTL,"daiphunnuoc.""GIỜ PLC""",Giữ đồng hồ đọc giờ PLC.
+HMI_LOI,Bool,"""ĐÈN BÁO LỖI""",Giữ hiển thị ngõ ra Q0.5.
+HMI_QUA_TAI,Bool,daiphunnuoc.hmi_qua_tai,Công tắc giả lập duy trì; 1 = quá tải.
+HMI_RESET_NHAN,Bool,daiphunnuoc.hmi_reset,RESET: Press SetBit; Release ResetBit.
+HMI_RTC_OK,Bool,"daiphunnuoc.""RTC OK""",Giữ trạng thái đọc RTC hợp lệ.
+HMI_STOP,Bool,daiphunnuoc.hmi_stop,STOP: Press SetBit; Release ResetBit; bỏ InvertBit.
+HMI_TRONG_GIO,Bool,"daiphunnuoc.""TRONG GIỜ""",Giữ trạng thái trong/ngoài lịch vận hành.
+HMI_VAN1,Bool,"""VAN 1""",Giữ hiển thị ngõ ra Q0.1.
+HMI_VAN2,Bool,"""VAN 2""",Giữ hiển thị ngõ ra Q0.2.
+HMI_VAN3,Bool,"""VAN 3""",Giữ hiển thị ngõ ra Q0.3.
+HMI_VAN4,Bool,"""VAN 4""",Giữ hiển thị ngõ ra Q0.4.
+HMI_TAT_NHAN,Bool,daiphunnuoc.lenh_tat_hmi,Mới; TẮT: Press SetBit; Release ResetBit.
+HMI_TAM_DUNG,Bool,daiphunnuoc.tam_dung,"Mới; chỉ đọc trạng thái, đổi chữ TẠM DỪNG/TIẾP TỤC."

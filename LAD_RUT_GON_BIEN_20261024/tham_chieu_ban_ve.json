@@ -1,0 +1,215 @@
+{
+  "00_huong_dan": [],
+  "01_chuan_hoa_stop": [
+    "NÚT DỪNG",
+    "nut_stop_nhan",
+    "stop_thuong_dong"
+  ],
+  "02_1_loc_auto": [
+    "\"loc_auto_nha\".Q",
+    "\"loc_auto_nhan\".Q",
+    "CHỌN AUTO",
+    "FirstScan",
+    "nut_auto_da_loc"
+  ],
+  "02_2_loc_stop": [
+    "\"loc_stop_nha\".Q",
+    "\"loc_stop_nhan\".Q",
+    "FirstScan",
+    "nut_stop_da_loc",
+    "nut_stop_nhan"
+  ],
+  "02_3_loc_reset": [
+    "\"loc_reset_nha\".Q",
+    "\"loc_reset_nhan\".Q",
+    "FirstScan",
+    "NÚT RESET",
+    "nut_reset_da_loc"
+  ],
+  "03_cho_nha_lenh": [
+    "\"cho_nha_lenh\".Q",
+    "CHỌN AUTO",
+    "FirstScan",
+    "NÚT RESET",
+    "chon_auto_hmi",
+    "da_nha_lenh",
+    "hmi_reset",
+    "hmi_stop",
+    "lenh_tat_hmi",
+    "nut_stop_nhan"
+  ],
+  "04_bat_canh": [
+    "XUNG AUTO",
+    "chon_auto_hmi",
+    "da_nha_lenh",
+    "hmi_stop",
+    "lenh_auto",
+    "lenh_stop",
+    "nho_auto_that",
+    "nho_stop_hmi",
+    "nho_stop_that",
+    "nut_auto_da_loc",
+    "nut_stop_da_loc"
+  ],
+  "05_hop_lenh": [
+    "FirstScan",
+    "hmi_reset",
+    "nut_reset_da_loc",
+    "reset_chuong_trinh"
+  ],
+  "06_rtc": [
+    "GIỜ PLC",
+    "RTC OK",
+    "TRẠNG THÁI RTC"
+  ],
+  "07_lich_chay": [
+    "CA SÁNG",
+    "CA TỐI",
+    "GIỜ PLC.HOUR",
+    "GIỜ PLC.MINUTE",
+    "RTC OK",
+    "TRONG GIỜ"
+  ],
+  "08_bao_ve": [
+    "AN TOÀN",
+    "CHO PHÉP AUTO",
+    "LỖI HIỆN TẠI",
+    "RTC OK",
+    "hmi_du_nuoc",
+    "hmi_dung_khan",
+    "hmi_qua_tai",
+    "lenh_auto"
+  ],
+  "09_xac_nhan_loi": [
+    "AN TOÀN",
+    "RTC OK",
+    "XÁC NHẬN LỖI",
+    "reset_chuong_trinh"
+  ],
+  "10_nho_loi": [
+    "LỖI HIỆN TẠI",
+    "NHỚ LỖI",
+    "XÁC NHẬN LỖI",
+    "ĐÈN BÁO LỖI"
+  ],
+  "11a_huy_auto": [
+    "AN TOÀN",
+    "FirstScan",
+    "HỦY PHÉP CHẠY",
+    "NHỚ LỖI",
+    "RTC OK",
+    "lenh_tat_hmi",
+    "reset_chuong_trinh"
+  ],
+  "11b_giu_auto": [
+    "CHO PHÉP AUTO",
+    "HỦY PHÉP CHẠY",
+    "TRONG GIỜ",
+    "TỰ ĐỘNG CHẠY",
+    "lenh_auto",
+    "lenh_stop"
+  ],
+  "12_tam_dung": [
+    "CHO PHÉP AUTO",
+    "lenh_stop",
+    "tam_dung"
+  ],
+  "13_chuan_bi_buoc": [
+    "1",
+    "BƯỚC HIỆN TẠI",
+    "BƯỚC TIẾP THEO",
+    "TỰ ĐỘNG CHẠY"
+  ],
+  "14_buoc_1": [
+    "\"buoc1\".Q",
+    "2",
+    "BƯỚC HIỆN TẠI",
+    "BƯỚC TIẾP THEO",
+    "TỰ ĐỘNG CHẠY",
+    "etbuoc1",
+    "tam_dung"
+  ],
+  "15_buoc_2": [
+    "\"buoc2\".Q",
+    "3",
+    "BƯỚC HIỆN TẠI",
+    "BƯỚC TIẾP THEO",
+    "TỰ ĐỘNG CHẠY",
+    "etbuoc2",
+    "tam_dung"
+  ],
+  "16_buoc_3": [
+    "\"buoc3\".Q",
+    "4",
+    "BƯỚC HIỆN TẠI",
+    "BƯỚC TIẾP THEO",
+    "TỰ ĐỘNG CHẠY",
+    "etbuoc3",
+    "tam_dung"
+  ],
+  "17_buoc_4": [
+    "\"buoc4\".Q",
+    "5",
+    "BƯỚC HIỆN TẠI",
+    "BƯỚC TIẾP THEO",
+    "TỰ ĐỘNG CHẠY",
+    "etbuoc4",
+    "tam_dung"
+  ],
+  "18_buoc_5": [
+    "\"buoc5\".Q",
+    "1",
+    "BƯỚC HIỆN TẠI",
+    "BƯỚC TIẾP THEO",
+    "TỰ ĐỘNG CHẠY",
+    "etbuoc5",
+    "tam_dung"
+  ],
+  "19_chot_buoc": [
+    "0",
+    "BƯỚC HIỆN TẠI",
+    "BƯỚC TIẾP THEO",
+    "TỰ ĐỘNG CHẠY",
+    "tam_dung"
+  ],
+  "20a_van": [
+    "BƯỚC HIỆN TẠI",
+    "TỰ ĐỘNG CHẠY",
+    "VAN 1",
+    "VAN 2",
+    "VAN 3",
+    "VAN 4",
+    "tam_dung"
+  ],
+  "20b_bom": [
+    "BƠM P1",
+    "VAN 1",
+    "VAN 2",
+    "VAN 3",
+    "VAN 4"
+  ],
+  "21_chon_thoi_gian": [
+    "BƯỚC HIỆN TẠI",
+    "T#0ms",
+    "etbuoc1",
+    "etbuoc2",
+    "etbuoc3",
+    "etbuoc4",
+    "etbuoc5",
+    "etdangchay"
+  ],
+  "22a_tinh_giay": [
+    "10",
+    "1000",
+    "etdangchay",
+    "etms",
+    "giay_con_lai_tinh",
+    "giaydachay",
+    "thoigianconlai"
+  ],
+  "22b_ghi_khong": [
+    "0",
+    "BƯỚC HIỆN TẠI",
+    "thoigianconlai"
+  ]
+}

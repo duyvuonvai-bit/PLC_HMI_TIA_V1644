@@ -1,0 +1,11 @@
+﻿Tên tag,Kiểu dữ liệu,Địa chỉ,Công dụng
+CHỌN AUTO,Bool,%I0.0,"START thật, tiếp điểm NO."
+NÚT RESET,Bool,%I0.2,"RESET thật, tiếp điểm NO."
+NÚT DỪNG,Bool,%I0.5,"STOP thật, NO/NC theo stop_thuong_dong."
+BƠM P1,Bool,%Q0.0,Đèn mô phỏng bơm.
+VAN 1,Bool,%Q0.1,Đèn mô phỏng van 1.
+VAN 2,Bool,%Q0.2,Đèn mô phỏng van 2.
+VAN 3,Bool,%Q0.3,Đèn mô phỏng van 3.
+VAN 4,Bool,%Q0.4,Đèn mô phỏng van 4.
+ĐÈN BÁO LỖI,Bool,%Q0.5,Đèn lỗi từ trạng thái NHỚ LỖI.
+FirstScan,Bool,%M1.0,Bật System memory byte MB1; không ghi bit này.
