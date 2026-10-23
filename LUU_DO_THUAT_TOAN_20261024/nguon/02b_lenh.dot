@@ -1,0 +1,24 @@
+digraph "02b_lenh" {
+
+graph [rankdir=TB, bgcolor="transparent", pad="0.12", nodesep="0.34", ranksep="0.40", splines=polyline];
+node [shape=box, fontname="DejaVu Sans", fontsize=17, margin="0.18,0.12", style="filled", fillcolor="#edf5ff", color="#365a7d", penwidth=1.4];
+edge [fontname="DejaVu Sans", fontsize=14, color="#365a7d", fontcolor="#244461", arrowsize=0.8, penwidth=1.3];
+
+start [shape=ellipse, fillcolor="#dff4e9", label="TIẾP TỤC TỪ HÌNH 2A"];
+cancel [shape=diamond, fillcolor="#fff2d8", label="Có điều kiện\nhủy AUTO? [2]"];
+stop [label="Xóa AUTO\nXóa trạng thái tạm dừng", fillcolor="#fde8e6"];
+startcmd [shape=diamond, fillcolor="#fff2d8", label="Có xung START\nvà không có xung STOP?"];
+setauto [label="Chốt AUTO = 1"];
+auto [shape=diamond, fillcolor="#fff2d8", label="AUTO = 1?"];
+unpause [label="Tạm dừng = 0"];
+stopcmd [shape=diamond, fillcolor="#fff2d8", label="Có xung STOP?"];
+toggle [label="Đảo trạng thái tạm dừng\n0 → 1 hoặc 1 → 0", fillcolor="#fff2d8"];
+back [shape=ellipse, fillcolor="#dff4e9", label="TRỞ VỀ HÌNH 1"];
+start -> cancel;
+cancel -> stop [label="Có"]; cancel -> startcmd [label="Không"];
+startcmd -> setauto [label="Có"]; startcmd -> auto [label="Không"]; setauto -> auto;
+auto -> unpause [label="Không"]; auto -> stopcmd [label="Có"];
+stopcmd -> toggle [label="Có"]; stopcmd -> back [label="Không"];
+stop -> back; unpause -> back; toggle -> back;
+
+}
