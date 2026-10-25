@@ -1,0 +1,92 @@
+﻿Tờ,Số dây / tên mạng,Điểm đầu,Điểm cuối,Ghi chú
+01,AC01,QF2:2,PLC1:L1,
+01,AC02,X0:N,PLC1:N,
+01,PE,Thanh PE,PLC1:FE,
+01,002,PS1:−V,PLC1:1M,Common DI dùng nguồn 24 VDC ngoài; không nối +24V_C vào L+ CPU
+01,001,24V_C,SB_AUTO:13,
+01,101,SB_AUTO:14,XDI:1 → PLC1:I0.0,Nhấn AUTO = 1; tiếp điểm/đế relay thực phải đối chiếu
+01,001,24V_C,KSL:13,
+01,102,KSL:14,XDI:2 → PLC1:I0.1,Đủ nước = 1; tiếp điểm/đế relay thực phải đối chiếu
+01,001,24V_C,SB_RESET:13,
+01,103,SB_RESET:14,XDI:3 → PLC1:I0.2,Nhấn RESET = 1; tiếp điểm/đế relay thực phải đối chiếu
+01,001,24V_C,KSR:báo ngắt-C,"KSR là cổng chức năng, số chân CHƯA XÁC NHẬN"
+01,104,KSR:báo ngắt-NC,XDI:4 → PLC1:I0.3,Mạch ngắt = 1; tiếp điểm/đế relay thực phải đối chiếu
+01,001,24V_C,OL1:97,
+01,105,OL1:98,XDI:5 → PLC1:I0.4,Quá tải = 1; tiếp điểm/đế relay thực phải đối chiếu
+01,001,24V_C,SB_STOP:13,
+01,106,SB_STOP:14,XDI:6 → PLC1:I0.5,Nhấn STOP = 1; tiếp điểm/đế relay thực phải đối chiếu
+01,001,24V_C,F11:1,
+01,011,F11:2,PLC1:1L,Cầu chì: CHƯA XÁC NHẬN trị số
+01,001,24V_C,F12:1,
+01,012,F12:2,PLC1:2L,Cầu chì: CHƯA XÁC NHẬN trị số
+01,201,PLC1:Q0.0,KA0:A1,
+01,002,KA0:A2,0V_C,
+01,202,PLC1:Q0.1,KA1:A1,
+01,002,KA1:A2,0V_C,
+01,203,PLC1:Q0.2,KA2:A1,
+01,002,KA2:A2,0V_C,
+01,204,PLC1:Q0.3,KA3:A1,
+01,002,KA3:A2,0V_C,
+01,205,PLC1:Q0.4,KA4:A1,
+01,002,KA4:A2,0V_C,
+01,206,PLC1:Q0.5,HL1:+,
+01,002,HL1:−,0V_C,
+01,003,KSR:nguồn tải cho phép,F20:1,"Cổng chức năng KSR, CHƯA XÁC NHẬN chân và khả năng đóng cắt"
+01,301,F20:2,KA0:13,
+01,302,KA0:14,OL1:95,
+01,303,OL1:96,KSL:23,
+01,304,KSL:24,KM1:A1,
+01,002,KM1:A2,0V_C,
+01,003,KSR:nguồn tải cho phép,F21:1,"Cổng chức năng KSR, CHƯA XÁC NHẬN chân và khả năng đóng cắt"
+01,311,F21:2,KA1:13,
+01,321,KA1:14,XV:1 → YV1:+,"2W160-15, NC; điện áp 24VDC dự kiến, công suất CHƯA XÁC NHẬN"
+01,002,YV1:−,XV:2 → 0V_C,
+01,003,KSR:nguồn tải cho phép,F22:1,"Cổng chức năng KSR, CHƯA XÁC NHẬN chân và khả năng đóng cắt"
+01,312,F22:2,KA2:13,
+01,322,KA2:14,XV:3 → YV2:+,"2W160-15, NC; điện áp 24VDC dự kiến, công suất CHƯA XÁC NHẬN"
+01,002,YV2:−,XV:4 → 0V_C,
+01,003,KSR:nguồn tải cho phép,F23:1,"Cổng chức năng KSR, CHƯA XÁC NHẬN chân và khả năng đóng cắt"
+01,313,F23:2,KA3:13,
+01,323,KA3:14,XV:5 → YV3:+,"2W160-15, NC; điện áp 24VDC dự kiến, công suất CHƯA XÁC NHẬN"
+01,002,YV3:−,XV:6 → 0V_C,
+01,003,KSR:nguồn tải cho phép,F24:1,"Cổng chức năng KSR, CHƯA XÁC NHẬN chân và khả năng đóng cắt"
+01,314,F24:2,KA4:13,
+01,324,KA4:14,XV:7 → YV4:+,"2W160-15, NC; điện áp 24VDC dự kiến, công suất CHƯA XÁC NHẬN"
+01,002,YV4:−,XV:8 → 0V_C,
+02,L1,X0:1,QF1:1,
+02,1L1,QF1:2,KM1:1L1,
+02,2L1,KM1:2T1,OL1:1L1,
+02,U,OL1:2T1,X1:1 → P1:U1,
+02,L2,X0:2,QF1:3,
+02,1L2,QF1:4,KM1:3L2,
+02,2L2,KM1:4T2,OL1:3L2,
+02,V,OL1:4T2,X1:2 → P1:V1,
+02,L3,X0:3,QF1:5,
+02,1L3,QF1:6,KM1:5L3,
+02,2L3,KM1:6T3,OL1:5L3,
+02,W,OL1:6T3,X1:3 → P1:W1,
+02,PE,Thanh PE,X1:PE → Vỏ P1,
+02,PE,X0:5,Thanh PE → vỏ tủ / PS1:PE / PLC1:FE,
+02,L1,X0:1,QF2:1,Nguồn phải có trung tính N; không lấy hai pha 400V cấp CPU/PS1
+02,AC01,QF2:2,PS1:L / PLC1:L1,
+02,AC02,X0:4 (N),PS1:N / PLC1:N,
+02,010,PS1:+V,F10:1,
+02,001,F10:2,24V_C / tờ 01,
+02,002,PS1:−V,0V_C / tờ 01,
+02,K1A,KSR:Kênh 1-ra,SB0:Kênh 1-NC vào,Cổng chức năng; chưa có số chân để thi công
+02,K1B,SB0:Kênh 1-NC ra,KSR:Kênh 1-về,"Cùng một nút dừng khẩn tự giữ, hai NC cưỡng bức mở"
+02,K2A,KSR:Kênh 2-ra,SB0:Kênh 2-NC vào,Cổng chức năng; chưa có số chân để thi công
+02,K2B,SB0:Kênh 2-NC ra,KSR:Kênh 2-về,"Cùng một nút dừng khẩn tự giữ, hai NC cưỡng bức mở"
+02,R01,KSR:reset-ra,SB3:NO-vào,"Cổng chức năng, CHƯA XÁC NHẬN"
+02,R02,SB3:NO-ra,KA0:21,
+02,R03,KA0:22,KA1:21,
+02,R04,KA1:22,KA2:21,
+02,R05,KA2:22,KA3:21,
+02,R06,KA3:22,KA4:21,
+02,R07,KA4:22,KM1:21,
+02,R08,KM1:22,KSR:reset-về,Chọn đúng tiếp điểm phản hồi theo yêu cầu KSR; chưa xác nhận EDM
+02,001,24V_C,KSR:nguồn phụ + và nguồn cấp tiếp điểm tải,Cổng chức năng; chân thực và số tiếp điểm nối tiếp chờ chọn model
+02,002,0V_C,KSR:nguồn phụ −,Cổng chức năng
+02,001,24V_C,LS1:13,Dự kiến tiếp điểm khô đóng khi đủ nước; kiểm loại cảm biến thực
+02,401,LS1:14,KSL:A1,
+02,002,KSL:A2,0V_C,

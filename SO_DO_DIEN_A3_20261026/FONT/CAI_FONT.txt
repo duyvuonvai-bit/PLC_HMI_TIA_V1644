@@ -1,0 +1,4 @@
+Windows: nhấp phải DejaVuSans.ttf > Install. Mở lại DXF.
+Font trong DXF: DejaVuSans.ttf, style VN.
+PDF đã nhúng/vẽ chữ theo dữ liệu xuất, dùng để đối chiếu.
+Nếu thay bằng Arial, cần kiểm lại độ rộng chữ và nhãn đầu nối.

@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-26",
+  "checks": [
+    {
+      "file": "01_Dieu_khien_PLC_A3",
+      "entities": 530,
+      "blocks": 10,
+      "audit_errors": 0,
+      "audit_fixes": 0,
+      "pdf_mm": [
+        420.0,
+        297.0
+      ]
+    },
+    {
+      "file": "02_Dong_luc_va_nguon_A3",
+      "entities": 842,
+      "blocks": 10,
+      "audit_errors": 0,
+      "audit_fixes": 0,
+      "pdf_mm": [
+        420.0,
+        297.0
+      ]
+    }
+  ],
+  "connections": 91,
+  "scope": "DXF audit and A3 page size only; not electrical safety validation"
+}
