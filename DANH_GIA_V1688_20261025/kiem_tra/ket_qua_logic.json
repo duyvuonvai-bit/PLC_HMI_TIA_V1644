@@ -1,0 +1,108 @@
+{
+  "kind": "Kiem chung logic doc lap, khong phai TIA/PLCSIM",
+  "source_commit": "aae862c01ddf4d1225ce9127cda915b7a7da8b55",
+  "program_files_modified": false,
+  "reachable_equivalence": {
+    "arbitrary_old_states": 16,
+    "input_combinations": 32,
+    "first_scan_comparisons": 512,
+    "states_after_first_scan": 4,
+    "reachable_states": 7,
+    "normal_transitions_compared": 224,
+    "different_observable_transitions": 0,
+    "reachable_state_values_G_Q_edge_latch": [
+      [
+        false,
+        false,
+        true,
+        false
+      ],
+      [
+        false,
+        false,
+        true,
+        true
+      ],
+      [
+        false,
+        true,
+        true,
+        false
+      ],
+      [
+        true,
+        false,
+        false,
+        false
+      ],
+      [
+        true,
+        false,
+        false,
+        true
+      ],
+      [
+        true,
+        false,
+        true,
+        false
+      ],
+      [
+        true,
+        false,
+        true,
+        true
+      ]
+    ]
+  },
+  "local_equivalence": {
+    "NW8_two_cancel_contacts_boolean_cases": 32,
+    "NW10_14_run_contact_after_timer_cases": 160,
+    "NW16_pump_pause_contact_cases": 64,
+    "NW15_shared_reset_condition_cases": 256
+  },
+  "display_step_zero_trace": [
+    {
+      "event": "RUN, AUTO=0",
+      "AUTO_request": false,
+      "hmi_stop": true,
+      "permission_AUTO": false,
+      "TU_DONG_CHAY": false,
+      "step": 0,
+      "proposed_step": 0,
+      "elapsed_ms": 0,
+      "remaining_s": 0,
+      "pump": false,
+      "valves": [
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "event": "Bật AUTO khi STOP đã=1",
+      "AUTO_request": true,
+      "hmi_stop": true,
+      "permission_AUTO": true,
+      "TU_DONG_CHAY": true,
+      "step": 0,
+      "proposed_step": 1,
+      "elapsed_ms": 0,
+      "remaining_s": 10,
+      "pump": false,
+      "valves": [
+        false,
+        false,
+        false,
+        false
+      ]
+    }
+  ],
+  "limits": [
+    "Khong xac nhan cau hinh FirstScan, thoi gian IEC timer thuc, HMI Events hay day dien.",
+    "Gia tri dau vao duoc giu nhat quan trong mot scan mo hinh; khong mo phong ghi bat dong bo/Force giua rung.",
+    "Khong co chuong trinh khac ghi de bo nho canh, quyen AUTO hoac timer.",
+    "Khong co ket qua kiem thu PLCSIM duoc ghi Dat tu mo hinh nay."
+  ]
+}

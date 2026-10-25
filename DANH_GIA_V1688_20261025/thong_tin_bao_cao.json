@@ -1,0 +1,21 @@
+{
+  "source_commit": "aae862c01ddf4d1225ce9127cda915b7a7da8b55",
+  "source_repository_modified": false,
+  "plcsim_cases": 40,
+  "plcsim_cases_executed_by_assistant": 0,
+  "score_design": 76,
+  "score_design_max": 90,
+  "unscored_max": 10,
+  "files": [
+    {
+      "name": "Bao_cao_danh_gia_PLC_HMI_V1688.pdf",
+      "pages": 14,
+      "sha256": "e894fb491717aa974858d39d3889e49ea10fe3dab3ac0098a867a7fcab3c9501"
+    },
+    {
+      "name": "Bo_40_tinh_huong_PLCSIM_V1688.pdf",
+      "pages": 13,
+      "sha256": "50b15b751b166e23e2dba851c69245c31c01cc11613b86af93afa326532d79c3"
+    }
+  ]
+}

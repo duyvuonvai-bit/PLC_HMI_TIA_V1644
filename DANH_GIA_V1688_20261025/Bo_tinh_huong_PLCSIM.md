@@ -1,0 +1,371 @@
+# Bộ 40 tình huống kiểm thử V1688 trên PLCSIM
+
+Nguồn: 18 Network trong repo V1688, commit `aae862c01ddf4d1225ce9127cda915b7a7da8b55`. Đây là **kế hoạch thử**, không phải kết quả đã chạy. Tất cả các dòng có trạng thái **Chưa chạy PLCSIM**. Kỳ vọng mô tả bản hiện tại, kể cả hành vi hiển thị cần cải thiện; không giả định code đã được sửa.
+
+- B = điều kiện nền mô tả ở từng dòng; C = đã chọn AUTO hợp lệ từ B và đang chạy.
+- AUTO là mức `chon_auto_hmi`; STOP là mức `hmi_stop` (1 giữ, 0 tiếp tục); RESET là mức `hmi_reset`. Người dùng đã xác nhận Events HMI đúng.
+- Thời gian 10 s là PT; thời gian đo/ngõ ra chịu chu kỳ quét, cập nhật timer và chu kỳ lấy mẫu. Dùng Trace để xét sự kiện sát chuyển bước; không yêu cầu Watch/HMI bắt được mọi trạng thái trung gian.
+- Đổi lịch bằng đồng hồ CPU/môi trường để `RD_LOC_T` thực trả giờ đó; không Modify một lần `GIỜ PLC` rồi xem như đồng hồ đã đổi vì NW2 sẽ ghi đè.
+- Các trường hợp mã RTC=1 hoặc lỗi RTC chỉ ghi đã kiểm thử nếu môi trường thực tạo được mã đó. Không ép kết quả có vẻ đạt bằng cách sửa mã PLC hoặc ghi đè RET_VAL một lần. Không tạo được điều kiện thì giữ chưa kiểm chứng.
+- FirstScan phải được quan sát đúng ở vòng quét đầu. Trường hợp A đã bằng 1 tại FirstScan khác với HMI tạo cạnh 0→1 sau FirstScan. DB không Retain/Start value và cơ chế ghi HMI quyết định tình huống nào thực sự đã tạo được.
+- Thử ngắt Runtime/HMI trong môi trường mô phỏng. Bảo vệ động cơ, cảm biến, đứt dây và dừng khẩn phần cứng thật phải kiểm riêng; không dùng kết quả PLCSIM để chứng nhận bảo vệ phần cứng.
+
+## T01 — Khởi động theo giá trị mặc định DB
+
+- **Điều kiện ban đầu:** CPU ở STOP hoặc trước khởi động; các Start value trong ảnh: các Bool=false, các số=0.
+- **Thao tác thực hiện:** Cho CPU RUN; ghi Trace từ vòng quét đầu; quan sát trước khi HMI ghi các giá trị mô phỏng.
+- **Kỳ vọng theo V1688 hiện tại:** Bơm/van OFF, bước 0, timer reset. hmi_du_nuoc=false tạo LỖI HIỆN TẠI/NHỚ LỖI và Q0.5=1; đây là báo thiếu nước mặc định, không phải tự chạy.
+- **Biến cần theo dõi:** FirstScan; hmi_du_nuoc; NHỚ LỖI; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Bơm/van bật khi chưa có lệnh AUTO hợp lệ; hoặc nhầm đèn lỗi mặc định thành lỗi khởi tạo. Kiểm tra FirstScan thực lên 1 trong vòng quét đầu rồi về 0; không chỉ dựa vào tên tag %M1.0.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T02 — Phục hồi điều kiện sau khởi động
+
+- **Điều kiện ban đầu:** Sau T01; AUTO=0; NHỚ LỖI=1 do nước mặc định thấp.
+- **Thao tác thực hiện:** Đặt đủ nước, quá tải=0, dừng khẩn=0; xác nhận RTC OK; nhấn rồi nhả RESET.
+- **Kỳ vọng theo V1688 hiện tại:** Lỗi hiện tại hết; RESET xóa nhớ lỗi; tất cả ngõ ra OFF; AUTO vẫn chưa có quyền; chỉ chạy sau lần chọn AUTO mới.
+- **Biến cần theo dõi:** hmi_reset; XÁC NHẬN LỖI; NHỚ LỖI; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Tự bật bơm chỉ vì nước vừa đủ hoặc vừa xóa lỗi.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T03 — AUTO đã ở 1 ngay vòng quét đầu
+
+- **Điều kiện ban đầu:** Chuẩn bị tình huống A=chon_auto_hmi=1 thực sự tại FirstScan; các bảo vệ hợp lệ. Chỉ tính là đã tạo đúng tình huống khi Trace xác nhận A=1 tại FirstScan.
+- **Thao tác thực hiện:** Cho CPU vào RUN; giữ A=1; sau đó A=0 ít nhất một vòng quét rồi A=1.
+- **Kỳ vọng theo V1688 hiện tại:** Lần RUN không tự cấp quyền AUTO; A giữ 1 không tạo cạnh mới; sau A=0→1 hợp lệ mới chạy bước 1.
+- **Biến cần theo dõi:** FirstScan; chon_auto_hmi; XUNG AUTO; ĐÃ GẠT TẮT; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Cấp AUTO ngay sau FirstScan dù A chưa từng về 0. Nếu A chỉ lên 1 sau FirstScan, đó là lệnh mới, không phải tình huống này.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T04 — STOP→RUN và khởi động lại CPU
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi.
+- **Thao tác thực hiện:** Cho CPU STOP rồi RUN; ghi trạng thái thực của các DB không Retain và thời điểm HMI ghi lại AUTO. Lặp với chức năng khởi động lại CPU mô phỏng nếu môi trường hỗ trợ. Mất/cấp nguồn PLC thật là phép thử phần cứng riêng.
+- **Kỳ vọng theo V1688 hiện tại:** Trong FirstScan: quyền AUTO=0, bước 0, bơm/van OFF. AUTO giữ 1 từ FirstScan bị chặn; nếu HMI tạo A=0→1 sau đó thì được xem là lệnh mới và có thể chạy.
+- **Biến cần theo dõi:** FirstScan; chon_auto_hmi; XUNG AUTO; NHỚ LỖI; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Không tách được khởi động PLC khỏi lệnh HMI ghi lại; bơm/van có lệnh ON ngay trong FirstScan.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T05 — Chọn AUTO ngoài ca và nghĩa đèn AUTO
+
+- **Điều kiện ban đầu:** B: PLC RUN; RTC hợp lệ, 06:30; đủ nước, không quá tải/dừng khẩn; đã RESET xóa lỗi rồi nhả; AUTO=0, STOP=0, bước 0. Chuyển giờ PLC về 12:00.
+- **Thao tác thực hiện:** TẮT rồi bật AUTO, giữ AUTO=1.
+- **Kỳ vọng theo V1688 hiện tại:** CHO PHÉP AUTO=1 nhưng TỰ ĐỘNG CHẠY=0, bước và timer về 0, bơm/van OFF. HMI_AUTO hiện liên kết TỰ ĐỘNG CHẠY nên đèn AUTO đọc tag đó sẽ tắt; ghi nhận khác biệt nghĩa hiển thị.
+- **Biến cần theo dõi:** chon_auto_hmi; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; HMI_AUTO; HMI_TRONG_GIO
+- **Dấu hiệu sai / điểm cần ghi nhận:** Bơm/van chạy ngoài ca; hoặc kết luận mất quyền AUTO chỉ từ đèn AUTO đang tắt.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T06 — Bắt đầu ca sáng
+
+- **Điều kiện ban đầu:** B: PLC RUN; RTC hợp lệ, 06:30; đủ nước, không quá tải/dừng khẩn; đã RESET xóa lỗi rồi nhả; AUTO=0, STOP=0, bước 0. Giờ 05:59:59; bật AUTO hợp lệ trước ca.
+- **Thao tác thực hiện:** Theo dõi đồng hồ qua 06:00:00.
+- **Kỳ vọng theo V1688 hiện tại:** Trước 06:00: TỰ ĐỘNG CHẠY=0, bước 0, bơm/van OFF. Từ 06:00: bước 1, bơm ON, van 1000; timer bắt đầu theo thứ tự quét.
+- **Biến cần theo dõi:** GIỜ PLC; CA SÁNG; TRONG GIỜ; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Chạy sớm trước 06:00 hoặc không chạy khi vào ca dù quyền AUTO và điều kiện khác hợp lệ.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T07 — Kết thúc ca sáng
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi. Chuẩn bị giờ 07:59:59.
+- **Thao tác thực hiện:** Theo dõi qua 08:00:00.
+- **Kỳ vọng theo V1688 hiện tại:** CA SÁNG/TRONG GIỜ/TỰ ĐỘNG CHẠY=0; bước 0, tất cả ET=0; bơm/van OFF; CHO PHÉP AUTO còn 1.
+- **Biến cần theo dõi:** GIỜ PLC; CA SÁNG; TRONG GIỜ; buoc1…buoc5.ET; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Bơm/van còn ON sau khi chương trình đã xử lý giờ 08:00; timer hoặc bước còn giữ trái thiết kế.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T08 — Bắt đầu ca tối
+
+- **Điều kiện ban đầu:** B: PLC RUN; RTC hợp lệ, 06:30; đủ nước, không quá tải/dừng khẩn; đã RESET xóa lỗi rồi nhả; AUTO=0, STOP=0, bước 0. AUTO đã có quyền; giờ 16:59:59.
+- **Thao tác thực hiện:** Theo dõi qua 17:00:00.
+- **Kỳ vọng theo V1688 hiện tại:** Trước 17:00 chờ; từ 17:00 chạy bước 1, bơm ON, van 1000.
+- **Biến cần theo dõi:** GIỜ PLC; CA TỐI; TRONG GIỜ; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Sai biên 17:00 hoặc bắt đầu lại từ bước cũ của ca sáng.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T09 — Không gián đoạn tại 20:00
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi. Chuẩn bị giờ 19:59:59; đang bước bất kỳ.
+- **Thao tác thực hiện:** Theo dõi qua 20:00:00 mà không thay đổi lệnh khác.
+- **Kỳ vọng theo V1688 hiện tại:** CA TỐI vẫn 1; bước và timer tiếp tục; không reset chu trình vì đổi nhánh so sánh giờ.
+- **Biến cần theo dõi:** GIỜ PLC.HOUR; GIỜ PLC.MINUTE; CA TỐI; BƯỚC HIỆN TẠI; ET bước hiện tại; Q0.0…Q0.4
+- **Dấu hiệu sai / điểm cần ghi nhận:** Có khoảng ngắt, bước về 0/1 hoặc timer reset đúng tại 20:00.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T10 — Kết thúc ca tối lúc 20:30
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi. Chuẩn bị giờ 20:29:59.
+- **Thao tác thực hiện:** Theo dõi qua 20:30:00.
+- **Kỳ vọng theo V1688 hiện tại:** Từ 20:30: CA TỐI=0, TỰ ĐỘNG CHẠY=0, bước và timer về 0, bơm/van OFF; quyền AUTO vẫn giữ.
+- **Biến cần theo dõi:** GIỜ PLC; CA TỐI; buoc1…buoc5.ET; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Còn chạy trong 20:30 hoặc dừng sớm tại 20:29.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T11 — Chuyển lịch qua nửa đêm
+
+- **Điều kiện ban đầu:** AUTO có quyền, đủ điều kiện; giờ 23:59:59 ngoài ca.
+- **Thao tác thực hiện:** Theo dõi 00:00:00 rồi chuẩn bị ca 06:00 ngày sau.
+- **Kỳ vọng theo V1688 hiện tại:** Ngoài hai khoảng lịch thì bơm/van OFF; ngày mới không tự tạo ca; đến 06:00 mới chạy nếu quyền AUTO còn và STOP=0.
+- **Biến cần theo dõi:** GIỜ PLC; CA SÁNG; CA TỐI; TRONG GIỜ; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Chạy lúc 00:00 hoặc mất quyền AUTO chỉ do sang ngày.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T12 — Lùi/tiến đồng hồ khi đang chạy
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi.
+- **Thao tác thực hiện:** Đổi giờ CPU từ trong ca sang 12:00, sau đó về 06:30; xác nhận giá trị RD_LOC_T thực đọc.
+- **Kỳ vọng theo V1688 hiện tại:** Ngoài ca reset bước/timer, outputs OFF. Quay vào ca: từ bước 1 nếu AUTO còn quyền, STOP=0. Không tiếp tục ET của ca trước.
+- **Biến cần theo dõi:** GIỜ PLC; TRONG GIỜ; buoc1…buoc5.ET; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Giữ ET/bước qua đoạn ngoài ca hoặc vẫn chạy ngoài lịch.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T13 — RTC trả mã 1 vẫn hợp lệ
+
+- **Điều kiện ban đầu:** Môi trường cho phép RD_LOC_T thực trả RET_VAL=1; bảo vệ hợp lệ, A=0.
+- **Thao tác thực hiện:** Tạo điều kiện thời gian địa phương phù hợp để xuất hiện mã 1 nếu được hỗ trợ; quan sát RTC OK, sau đó chọn AUTO.
+- **Kỳ vọng theo V1688 hiện tại:** RTC OK=1 với mã 0 hoặc 1. Quyết định chạy vẫn theo giờ địa phương và quyền AUTO. Nếu môi trường không tạo được mã 1, để chưa kiểm chứng.
+- **Biến cần theo dõi:** TRẠNG THÁI RTC; RTC OK; GIỜ PLC; CA SÁNG; CA TỐI; CHO PHÉP AUTO
+- **Dấu hiệu sai / điểm cần ghi nhận:** Mã 1 bị coi là lỗi. Không dùng Modify một lần RET_VAL làm bằng chứng vì NW2 sẽ ghi đè.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T14 — Lỗi đọc RTC khi AUTO đang bật
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi.
+- **Thao tác thực hiện:** Dùng tình huống lỗi RTC thực hoặc cơ chế lỗi được môi trường hỗ trợ để RD_LOC_T trả mã ngoài 0/1.
+- **Kỳ vọng theo V1688 hiện tại:** RTC OK=0; LỖI HIỆN TẠI/NHỚ LỖI=1; quyền AUTO bị hủy; bước và timer về 0; bơm/van OFF, đèn lỗi ON.
+- **Biến cần theo dõi:** TRẠNG THÁI RTC; RTC OK; LỖI HIỆN TẠI; NHỚ LỖI; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Vẫn có lệnh chạy khi RTC OK=0. Nếu không tạo được lỗi thật, giữ kết quả chưa kiểm chứng; không sửa source để giả kết quả.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T15 — Lỗi RTC khi AUTO đang tắt
+
+- **Điều kiện ban đầu:** A=0; các bảo vệ khác hợp lệ; NHỚ LỖI=0.
+- **Thao tác thực hiện:** Tạo mã RTC ngoài 0/1 bằng cơ chế được hỗ trợ; quan sát trước và sau khi A lên 1.
+- **Kỳ vọng theo V1688 hiện tại:** A=0: RTC OK=0 và HỦY PHÉP CHẠY=1 nhưng riêng RTC chưa đặt LỖI HIỆN TẠI. A=1: lỗi RTC được ghi nhớ và không chạy.
+- **Biến cần theo dõi:** chon_auto_hmi; RTC OK; LỖI HIỆN TẠI; NHỚ LỖI; HỦY PHÉP CHẠY; Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Nhầm việc chưa bật đèn lỗi khi A=0 thành cho phép chạy; hoặc cấp AUTO khi RTC lỗi.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T16 — Giờ/múi giờ sai nhưng đọc RTC thành công
+
+- **Điều kiện ban đầu:** B: PLC RUN; RTC hợp lệ, 06:30; đủ nước, không quá tải/dừng khẩn; đã RESET xóa lỗi rồi nhả; AUTO=0, STOP=0, bước 0.
+- **Thao tác thực hiện:** Đặt giờ CPU lệch có chủ đích trong môi trường mô phỏng; so sánh GIỜ PLC với giờ tham chiếu và lịch.
+- **Kỳ vọng theo V1688 hiện tại:** RTC OK vẫn 1 nếu mã 0/1; lịch chạy theo GIỜ PLC thực đọc, không tự phát hiện sai giờ so với giờ thực. Ghi nhận giới hạn chức năng, khôi phục giờ sau thử.
+- **Biến cần theo dõi:** GIỜ PLC; TRẠNG THÁI RTC; RTC OK; TRONG GIỜ
+- **Dấu hiệu sai / điểm cần ghi nhận:** Kết luận RTC OK=1 nghĩa là giờ thực chắc chắn đúng; đồng hồ HMI khác nguồn nhưng chưa đối chiếu.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T17 — Hai vòng chu trình đầy đủ
+
+- **Điều kiện ban đầu:** B: PLC RUN; RTC hợp lệ, 06:30; đủ nước, không quá tải/dừng khẩn; đã RESET xóa lỗi rồi nhả; AUTO=0, STOP=0, bước 0.
+- **Thao tác thực hiện:** Bật AUTO, chạy liên tục ít nhất hai vòng năm bước; ghi Trace.
+- **Kỳ vọng theo V1688 hiện tại:** 1→2→3→4→5→1; mỗi bước đặt 10 s, thực đo chịu độ phân giải/quét. Van 1000→1100→1110→1111→0101; bơm có lệnh ON xuyên chu trình.
+- **Biến cần theo dõi:** BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; buoc1…buoc5.Q/ET; Q0.0…Q0.4
+- **Dấu hiệu sai / điểm cần ghi nhận:** Nhảy nhiều bước trong một scan, sai mẫu van, timer của bước khác tích lũy, hoặc bơm ngắt ở chuyển bước bình thường.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T18 — Chuyển bước và hiển thị giây
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi.
+- **Thao tác thực hiện:** Quan sát các lần 1→2,4→5,5→1; ghi đồng thời bước, ET và thời gian còn lại.
+- **Kỳ vọng theo V1688 hiện tại:** Sau commit, HMI chọn ET của bước mới; thường hiện 10 s ngay. Không bắt buộc thấy số 0 ở cuối bước cũ vì polling HMI có thể bỏ mẫu.
+- **Biến cần theo dõi:** BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; etdangchay; thoigianconlai; các ET
+- **Dấu hiệu sai / điểm cần ghi nhận:** HMI giữ ET bước cũ nhiều scan sau chuyển bước; hoặc coi không thấy 0 s là lỗi timer khi không có bằng chứng.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T19 — STOP giữa bước và tiếp tục
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi. Bước 3, ET khoảng 4 s.
+- **Thao tác thực hiện:** Đặt hmi_stop=1 trong khoảng 5 s rồi trả 0.
+- **Kỳ vọng theo V1688 hiện tại:** Trong STOP: bước 3 giữ, ET không tích lũy thêm thời gian nghỉ, bơm/van OFF. Sau STOP=0: tiếp phần còn lại của bước 3, không chạy lại đủ 10 s.
+- **Biến cần theo dõi:** hmi_stop; BƯỚC HIỆN TẠI; buoc3.ET/Q; thoigianconlai; Q0.0…Q0.4
+- **Dấu hiệu sai / điểm cần ghi nhận:** ET về 0 khi tạm dừng; ET tiếp tục đếm trong nghỉ; ngõ ra còn ON khi STOP=1 đã được xử lý.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T20 — Giữ STOP lâu và thao tác nhiều lần
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi. Bước 2 đang đếm.
+- **Thao tác thực hiện:** Giữ STOP=1 lâu hơn 20 s; sau đó 0 để chạy, lặp 1/0 vài lần.
+- **Kỳ vọng theo V1688 hiện tại:** STOP được đọc theo mức, không tự đảo mỗi scan; bước/ET giữ khi 1, tiếp tục khi 0; không cộng khoảng nghỉ vào ET.
+- **Biến cần theo dõi:** hmi_stop; buoc2.ET; BƯỚC HIỆN TẠI; Q0.0…Q0.4
+- **Dấu hiệu sai / điểm cần ghi nhận:** Bước tự chuyển khi giữSTOP=1 hoặc nhả STOP bị reset chu trình ngoài dự kiến.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T21 — STOP sát ngưỡng chuyển bước
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi. Timer bước hiện tại gần 10 s.
+- **Thao tác thực hiện:** Lặp thử đặtSTOP=1 sát trước/đúng lúc Q timer lên; dùng Trace để biết thứ tự thực, rồi trảSTOP=0.
+- **Kỳ vọng theo V1688 hiện tại:** Khi STOP=1 được đọc ở các rung chuyển bước/commit, không commit bước mới; khi STOP=0 chuyển tối đa một bước theo Q. Nếu cạnh STOP đến sau vòng quét chuyển bước, dừng ở bước mới là hợp lý.
+- **Biến cần theo dõi:** hmi_stop; buocN.Q/ET; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.4
+- **Dấu hiệu sai / điểm cần ghi nhận:** Nhảy hai bước trong một scan hoặc kết luận sai chỉ từ Watch table lấy mẫu chậm.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T22 — STOP đặt trước AUTO: bước 0/còn 10 s
+
+- **Điều kiện ban đầu:** B: PLC RUN; RTC hợp lệ, 06:30; đủ nước, không quá tải/dừng khẩn; đã RESET xóa lỗi rồi nhả; AUTO=0, STOP=0, bước 0. hmi_stop=1 trước khi chọn AUTO.
+- **Thao tác thực hiện:** Bật AUTO hợp lệ trong ca; quan sát; sau đó bỏ STOP.
+- **Kỳ vọng theo V1688 hiện tại:** KhiSTOP=1: TỰ ĐỘNG CHẠY=1 nhưng bước 0, tất cả ET=0, bơm/van OFF; NW18 hiện 10 s. KhiSTOP=0: bắt đầu bước 1. Đây là điểm hiển thị cần ghi nhận.
+- **Biến cần theo dõi:** hmi_stop; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; thoigianconlai; Q0.0…Q0.4
+- **Dấu hiệu sai / điểm cần ghi nhận:** Bơm/van bật khi STOP=1. Giá trị 10 s ở bước 0 là kỳ vọng của bản hiện tại, không ghi là đã sửa.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T23 — Hết ca trong lúc STOP và đến ca sau
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi. Đang bước 4, đặtSTOP=1 gần cuối ca.
+- **Thao tác thực hiện:** Cho thời gian đi qua cuối ca rồi tới đầu ca sau, giữ AUTO=1 vàSTOP=1; cuối cùng trảSTOP=0.
+- **Kỳ vọng theo V1688 hiện tại:** Hết ca: bước và timer về 0, bơm/van OFF, quyền AUTO giữ. Đầu ca sau: vẫn bước 0 và ngõ ra OFF vìSTOP=1; trảSTOP=0 chạy từ bước 1.
+- **Biến cần theo dõi:** TRONG GIỜ; hmi_stop; CHO PHÉP AUTO; buoc1…buoc5.ET; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Giữ bước 4 qua hết ca hoặc tự chạy dùSTOP=1.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T24 — TẮT rồi bật lại AUTO
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi. Bước 4, ET chưa đủ 10 s.
+- **Thao tác thực hiện:** TẮT A=0; chờ ít nhất một scan; bật A=1.
+- **Kỳ vọng theo V1688 hiện tại:** A=0 hủy quyền, bước và timer về 0, ngõ ra OFF. A=1 hợp lệ bắt đầu bước 1, không phục hồi bước 4.
+- **Biến cần theo dõi:** chon_auto_hmi; XUNG AUTO; ĐÃ GẠT TẮT; các ET; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** AUTO chỉ nhả/tắt mà bước hoặc ET cũ còn ảnh hưởng lần chạy mới.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T25 — RESET khi đang chạy
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi.
+- **Thao tác thực hiện:** Nhấn và giữ RESET rồi nhả; giữ A=1; sau đó TẮT→AUTO.
+- **Kỳ vọng theo V1688 hiện tại:** RESET hủy quyền, bước và timer về 0, ngõ ra OFF. Nhả RESET với A vẫn 1 không tự chạy; A=0→1 mới chạy bước 1 nếu đủ điều kiện.
+- **Biến cần theo dõi:** hmi_reset; reset_chuong_trinh; CHO PHÉP AUTO; XUNG AUTO; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Tự chạy lại ngay khi nhả RESET mà chưa có cạnh AUTO mới.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T26 — AUTO và RESET cùng thời điểm
+
+- **Điều kiện ban đầu:** B: PLC RUN; RTC hợp lệ, 06:30; đủ nước, không quá tải/dừng khẩn; đã RESET xóa lỗi rồi nhả; AUTO=0, STOP=0, bước 0.
+- **Thao tác thực hiện:** Đặt A=1 đồng thờiRESET=1; giữ qua vài scan; nhả RESET nhưng giữ A=1; sau đó A=0→1.
+- **Kỳ vọng theo V1688 hiện tại:** RESET ưu tiên, không cấp quyền; nhả RESET không khởi động tự động; A=0→1 sau đó mới chạy.
+- **Biến cần theo dõi:** chon_auto_hmi; hmi_reset; HỦY PHÉP CHẠY; XUNG AUTO; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Có lệnh ON trong thời gian RESET đang 1 hoặc cạnh AUTO cũ được dùng lại sau nhả RESET.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T27 — STOP rồi RESET/TẮT không tự xóa STOP
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi. ĐangSTOP=1.
+- **Thao tác thực hiện:** Nhấn RESET rồi nhả; TẮT→AUTO nhưng chưa đổi STOP; cuối cùngSTOP=0.
+- **Kỳ vọng theo V1688 hiện tại:** RESET/TẮT đưa bước 0; hmi_stop vẫn 1 nếu HMI chưa đổi. AUTO mới vẫn không chạy van/bơm đến khi STOP=0; khi đó bắt đầu bước 1.
+- **Biến cần theo dõi:** hmi_stop; hmi_reset; chon_auto_hmi; BƯỚC HIỆN TẠI; thoigianconlai; Q0.0…Q0.4
+- **Dấu hiệu sai / điểm cần ghi nhận:** Gán việc còn dừng thành lỗi AUTO mà không kiểm STOP; hoặc PLC tự xóa STOP trái bản ảnh.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T28 — Thiếu nước khi đang chạy
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi.
+- **Thao tác thực hiện:** Đặt hmi_du_nuoc=0; giữ vài scan.
+- **Kỳ vọng theo V1688 hiện tại:** AN TOÀN=0; lỗi hiện tại/nhớ lỗi=1; AUTO bị hủy, bước và timer về 0; bơm/van OFF, Q0.5ON.
+- **Biến cần theo dõi:** hmi_du_nuoc; AN TOÀN; NHỚ LỖI; các ET; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Bơm/van vẫn có lệnh ON sau scan nhận mức thiếu nước.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T29 — Quá tải khi đang chạy
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi.
+- **Thao tác thực hiện:** Đặt hmi_qua_tai=1.
+- **Kỳ vọng theo V1688 hiện tại:** Nhớ lỗi=1, hủy AUTO, reset bước/timer, bơm/van OFF, đèn lỗi ON.
+- **Biến cần theo dõi:** hmi_qua_tai; AN TOÀN; LỖI HIỆN TẠI; NHỚ LỖI; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Quá tải đã được xử lý nhưng chưa hủy quyền/ngõ ra.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T30 — Dừng khẩn giả lập khi đang chạy
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi.
+- **Thao tác thực hiện:** Đặt hmi_dung_khan=1.
+- **Kỳ vọng theo V1688 hiện tại:** Dừng theo lỗi: hủy AUTO, bước và timer về 0, tất cả bơm/van OFF, đèn lỗi ON; khác STOP giữ bước.
+- **Biến cần theo dõi:** hmi_dung_khan; hmi_stop; NHỚ LỖI; các ET; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Dừng khẩn chỉ pause rồi tự tiếp tục sau khi bỏ điều kiện; hoặc nhầm mô phỏng với mạch dừng khẩn an toàn thực.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T31 — RESET trong khi nguyên nhân lỗi còn
+
+- **Điều kiện ban đầu:** NHỚ LỖI=1 do thiếu nước/quá tải/dừng khẩn; giữ ít nhất một điều kiện lỗi còn.
+- **Thao tác thực hiện:** Giữ RESET=1, thử AUTO=0→1; sau đó nhả RESET.
+- **Kỳ vọng theo V1688 hiện tại:** XÁC NHẬN LỖI=0, nhớ lỗi vẫn 1, quyền AUTO=0, bơm/van OFF. RESET không vượt qua điều kiện an toàn.
+- **Biến cần theo dõi:** hmi_reset; AN TOÀN; RTC OK; XÁC NHẬN LỖI; NHỚ LỖI; CHO PHÉP AUTO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Xóa được bit nhớ lỗi hoặc chạy khi nguyên nhân lỗi vẫn tồn tại.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T32 — Nguyên nhân hết nhưng chưa RESET
+
+- **Điều kiện ban đầu:** Đã dừng vì thiếu nước; NHỚ LỖI=1, A=1.
+- **Thao tác thực hiện:** Phục hồi nước=1, giữ các điều kiện khác tốt; chưa RESET.
+- **Kỳ vọng theo V1688 hiện tại:** LỖI HIỆN TẠI=0 nhưng NHỚ LỖI/Q0.5 vẫn 1; bơm/van OFF. Trang cảnh báo hiện trạng có thể đều bình thường nhưng cần RESET.
+- **Biến cần theo dõi:** hmi_du_nuoc; LỖI HIỆN TẠI; NHỚ LỖI; Q0.5; trang cảnh báo
+- **Dấu hiệu sai / điểm cần ghi nhận:** Tự chạy lại khi nước đủ; hoặc gọi việc đèn lỗi giữ sau phục hồi là lỗi SR.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T33 — Phục hồi hoàn chỉnh sau lỗi
+
+- **Điều kiện ban đầu:** Sau T32, A vẫn 1.
+- **Thao tác thực hiện:** RESET nhấn/nhả; kiểm không tự chạy; sau đó TẮT→AUTO.
+- **Kỳ vọng theo V1688 hiện tại:** RESET hợp lệ xóa nhớ lỗi nhưng chưa cấp AUTO; cạnh AUTO mới khởi động từ bước 1.
+- **Biến cần theo dõi:** hmi_reset; XÁC NHẬN LỖI; NHỚ LỖI; XUNG AUTO; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** Chạy ngay khi RESET mà không có cạnh AUTO mới; khôi phục bước cũ.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T34 — Giữ RESET trong lúc lỗi vừa hết
+
+- **Điều kiện ban đầu:** Nhớ lỗi=1; nguyên nhân lỗi còn; A=1, RESET=1.
+- **Thao tác thực hiện:** Khắc phục nguyên nhân khi RESET vẫn đang 1; giữ rồi nhả RESET.
+- **Kỳ vọng theo V1688 hiện tại:** Khi đủ an toàn và RTC, XÁC NHẬN LỖI=1 và nhớ lỗi được xóa theo mức RESET; quyền AUTO vẫn 0 vì RESET. Nhả RESET cần TẮT→AUTO để chạy.
+- **Biến cần theo dõi:** hmi_reset; AN TOÀN; RTC OK; XÁC NHẬN LỖI; NHỚ LỖI; CHO PHÉP AUTO
+- **Dấu hiệu sai / điểm cần ghi nhận:** Cho rằng RESET phải có cạnh mới dù bản PLC dùng mức; hoặc tự cấp AUTO khi nguyên nhân vừa hết.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T35 — Nhiều lỗi đồng thời và RESET
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi.
+- **Thao tác thực hiện:** Cùng lúc đặt thiếu nước và quá tải; nhấn RESET; chỉ phục hồi một lỗi; cuối cùng phục hồi hết rồi RESET hợp lệ.
+- **Kỳ vọng theo V1688 hiện tại:** Còn bất kỳ lỗi nào thì AN TOÀN=0, nhớ lỗi=1, ngõ ra OFF. Chỉ xóa khi tất cả điều kiện an toàn và RTC tốt; không lưu riêng lịch sử từng nguyên nhân.
+- **Biến cần theo dõi:** hmi_du_nuoc; hmi_qua_tai; hmi_dung_khan; AN TOÀN; NHỚ LỖI; Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** RESET vượt qua lỗi thứ hai hoặc nhầm một bit nhớ lỗi chung thành bộ nhớ từng nguyên nhân.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T36 — Lỗi xảy ra đúng lúc STOP/chuyển bước
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi. Gần ngưỡng 10 s; chuẩn bị hmi_stop=0/1.
+- **Thao tác thực hiện:** Đặt lỗi thiếu nước hoặc quá tải đồng thời STOP, lặp sát thời điểm chuyển bước.
+- **Kỳ vọng theo V1688 hiện tại:** Sau scan xử lý lỗi: TU=0, bước và timer về 0, ngõ ra OFF, nhớ lỗi=1. Lỗi/hủy chạy ưu tiên hơn chức năng giữ bước của STOP; không bảo toàn ET qua lỗi.
+- **Biến cần theo dõi:** hmi_stop; LỖI HIỆN TẠI; HỦY PHÉP CHẠY; buocN.Q/ET; CHO PHÉP AUTO; TỰ ĐỘNG CHẠY; BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; Q0.0…Q0.5
+- **Dấu hiệu sai / điểm cần ghi nhận:** STOP giữ bước qua lỗi trong khi TU đã 0; hoặc ngõ ra ON sau vòng quét đã xử lý lỗi.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T37 — Mất kết nối HMI và nhãn ONLINE
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi.
+- **Thao tác thực hiện:** Ngắt kết nối Runtime với PLC; theo dõi bằng phiên giám sát PLC độc lập; thử lại khi STOP=1.
+- **Kỳ vọng theo V1688 hiện tại:** Không có watchdog trong 18 Network: PLC giữ bit DB cuối, nên vẫn chạy theo lịch nếu STOP=0; khi STOP=1 tiếp tục dừng. HMI phải thể hiện mất kết nối/chất lượng tag theo cấu hình thực; cần ghi kết quả quan sát.
+- **Biến cần theo dõi:** chon_auto_hmi; hmi_stop; TỰ ĐỘNG CHẠY; Q0.0…Q0.5; trạng thái kết nối/HMI ONLINE
+- **Dấu hiệu sai / điểm cần ghi nhận:** Nhãn ONLINE vẫn xanh không phản ánh mất kết nối; không gọi việc PLC tiếp tục chạy là lỗi đã xác định khi chưa chốt yêu cầu dừng khi mất HMI.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T38 — Kết nối HMI lại và ghi lệnh cũ
+
+- **Điều kiện ban đầu:** PLC ở trạng thái A=0 đã được đọc ít nhất một scan; bảo vệ tốt, trong ca; HMI mất kết nối với trạng thái cũ có thể AUTO=1.
+- **Thao tác thực hiện:** Kết nối HMI lại; Trace xem HMI có ghi A=0→1 không; thử sau khởi động lại Runtime.
+- **Kỳ vọng theo V1688 hiện tại:** Nếu HMI ghi cạnh A=0→1 sau FirstScan thì PLC có thể cấp AUTO vì xem là lệnh mới. Không khẳng định HMI chắc chắn ghi lại; cần ghi điều quan sát được.
+- **Biến cần theo dõi:** chon_auto_hmi; XUNG AUTO; FirstScan; CHO PHÉP AUTO; Q0.0…Q0.4
+- **Dấu hiệu sai / điểm cần ghi nhận:** Tự chạy vì HMI phục hồi lệnh cũ trái chủ đích vận hành; nhầm tình huống này với A=1 liên tục từ FirstScan.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T39 — I/O vật lý chưa tích hợp và hai nguồn mức nước
+
+- **Điều kiện ban đầu:** B: PLC RUN; RTC hợp lệ, 06:30; đủ nước, không quá tải/dừng khẩn; đã RESET xóa lỗi rồi nhả; AUTO=0, STOP=0, bước 0.
+- **Thao tác thực hiện:** Lần lượt đổi I0.0/I0.2/I0.5 rồi I0.1/I0.3/I0.4, giữ các biến HMI; sau đó đổi hmi_du_nuoc.
+- **Kỳ vọng theo V1688 hiện tại:** Các I0.x không ảnh hưởng logic của 18 Network hiện tại. AN TOÀN theo hmi_*; HMI_DUNUOC trỏ I0.1 có thể khác HMI_DU_NUOC. Ghi đối tượng nào còn dùng nguồn cũ.
+- **Biến cần theo dõi:** I0.0…I0.5; hmi_*; HMI_DUNUOC; HMI_DU_NUOC; AN TOÀN; CHO PHÉP AUTO
+- **Dấu hiệu sai / điểm cần ghi nhận:** Cho rằng chỉ đấu thêm ba nút/cảm biến đã có tác dụng; giao diện báo đủ nước theo I0.1 trong khi PLC dùng DB khác.
+- **Kết quả:** Chưa chạy PLCSIM
+
+## T40 — Bước bị ghi ngoài miền hợp lệ
+
+- **Điều kiện ban đầu:** C: từ B, bật AUTO và chờ chạy; CHO PHÉP AUTO=1, TỰ ĐỘNG CHẠY=1, không lỗi.
+- **Thao tác thực hiện:** Chỉ trong PLCSIM, Modify một lần BƯỚC HIỆN TẠI=6, rồi thử -1; không giữ Force. Quan sát, sau đó TẮT/RESET và khôi phục điều kiện.
+- **Kỳ vọng theo V1688 hiện tại:** Bản hiện tại giữ bước bất hợp lệ khi TU=1, timer reset, van/bơm OFF, thời gian hiện 10 s; không có lỗi bước riêng. Đây là trạng thái do can thiệp ngoài, không phát sinh từ chu trình thông thường.
+- **Biến cần theo dõi:** BƯỚC HIỆN TẠI; BƯỚC TIẾP THEO; buoc1…buoc5.Q/ET; thoigianconlai; NHỚ LỖI; Q0.0…Q0.4
+- **Dấu hiệu sai / điểm cần ghi nhận:** Ngõ ra ON với bước ngoài 1–5; hoặc báo đây là lỗi tự phát dù chỉ tái hiện bằng Modify.
+- **Kết quả:** Chưa chạy PLCSIM

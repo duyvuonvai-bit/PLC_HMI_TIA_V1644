@@ -1,0 +1,115 @@
+{
+  "repository": "https://github.com/duyvuonvai-bit/PLC_HMI_TIA_V1688",
+  "commit": "aae862c01ddf4d1225ce9127cda915b7a7da8b55",
+  "phase": "Tiep nhan va kiem ke theo muc I cua yeu cau; chua danh gia logic",
+  "files": [
+    {
+      "name": "Screenshot 2026-10-24 020137.png",
+      "sha256": "14b85a8938b44302246ab3d47340a810990db5ff153505db2904a41d70bddbe8"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020142.png",
+      "sha256": "37957eb73871f24645628716897677cb269dcc1918e5fd676d13d0742e8f7f1f"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020147.png",
+      "sha256": "76010661434df92ba03c4f0e77466fb09b72a2699cd42c24c8ff744a1e7aa18b"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020226.png",
+      "sha256": "91365125c948dab65e266090e5bfa16ca372432d9a69270859e411c7de21a133"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020234.png",
+      "sha256": "849e0bf313a754ee273b5e37406c878d70cbf05b4f1660bffc8bea5b3ee74b51"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020252.png",
+      "sha256": "430f1f28cd09f4bd2e6437770cf34f462b75b861c237dd3a140bcdb7be4799f6"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020255.png",
+      "sha256": "37dbaca7d224348661ba99df7e9b5381fd181f5d8f809a5dc1045eee870b97d7"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020316.png",
+      "sha256": "48eb8b866c07ff81934891d627dad48ebd56bdee8cbc33f0f4440ce154a5b889"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020331.png",
+      "sha256": "031a205c8a751724c6427d73ee6ef4d87521445f19121ccefa16a5dc6ef25ab6"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020345.png",
+      "sha256": "a4b3c790fd51483723d98a89137ffb7fb700bdf4c241e1672b783d1d8ca42fc9"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020351.png",
+      "sha256": "bda63691b67d61c8bdecdabaf8ee095237db86221cd62702a3f4667c4eb19bb8"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020356.png",
+      "sha256": "932522cdbe52a3502450e82f0cf4fd100329b3eeb41c8b2f09a6bd92ea626baa"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020359.png",
+      "sha256": "8266ef9f5b23f19d36d14b5734d940f4c9e6e7dfef95bdb0d979aafb35947d4e"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020411.png",
+      "sha256": "80785242e6099ada93f55bebd711d5e9cf81b02969628ce71c7946a1429b040e"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020417.png",
+      "sha256": "9905badeca8e7c85484547b4bc1530e22d7fe3e16dc08f290676777ac7be5ffb"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020421.png",
+      "sha256": "9d07827aa2fee5cf37e365a22e598e71b504e95fc344eaf7894fed522b8530d1"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020429.png",
+      "sha256": "a845e9d494ad9f97d9864d2887b62e8b5685c4d2461108a683deb5f5ef26297a"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020441.png",
+      "sha256": "ec83614609aec36f7e088ace0b6e631679a541ac9789266509dba6a00d2d8816"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020451.png",
+      "sha256": "b55eb42a3630e36787ba085445f0bc18d88832fb4dd73397077406b51a78c2fd"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020500.png",
+      "sha256": "8f8f63655f469cacca6d5e114ff77621d8c2944555747c4013b0efa97b3082a9"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020508.png",
+      "sha256": "d328a2d660fd1082682fd04b141aec8353be0ada73e9c3c368d60ec32459c4f6"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020516.png",
+      "sha256": "0d5d018ea148bd7217181c5e0d3f5829c76511f9c6845a1ebea1b5e17580c7d1"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020527.png",
+      "sha256": "e023d906bae50e5e90a76b5c29945649193bcafd1f7f401b8964f95e275110ae"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020537.png",
+      "sha256": "dd6e95efd06014cd38f0b321678ca8c847853d0d159fe361d55b0e0f0e24899b"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020544.png",
+      "sha256": "11ce7d16c88cf3963b4ee57000adb5209f8a9f671eff7d233400f8079902c464"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020553.png",
+      "sha256": "5a478f2daea11718e5133d4a34aec82cc357dacda771dbd5417cc8d4dac0e096"
+    },
+    {
+      "name": "Screenshot 2026-10-24 020558.png",
+      "sha256": "9c11cfdc73b2dc22ec80b147901a010ceeec37fccc1d1ab3454a927d9529cf5e"
+    }
+  ]
+}
